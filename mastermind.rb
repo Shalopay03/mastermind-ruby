@@ -5,7 +5,7 @@ class Mastermind
   def play
     welcome
     player = Player.new
-    player.make_a_guess
+    puts player.make_a_guess
   end
 
   private
@@ -24,14 +24,16 @@ end
 class Player
   def make_a_guess
     puts 'Enter a four-digit code:'
-    code = gets
+    code = gets.chop
     while code.length != 4 || !code.chars.all? { |digit| ('1'..'6').to_a.include?(digit) }
       puts 'I said 4 digits!!!'
       code = gets.chop
     end
+    code
   end
 end
 
+# This class is about interaction of computer and the game
 class Computer
 end
 
