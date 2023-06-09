@@ -129,9 +129,11 @@ class Computer
 
   # Method for guessing a code
   def guess_a_code
-    code = []
-    4.times { code.push(rand(1..6).to_s) }
-    code.join('')
+    # Create array of possible codes
+    codes = ('1111'..'6666').to_a
+    codes.reject! { |element| element =~ /[0789]/ }
+
+    codes[rand(0..codes.length - 1)]
   end
 end
 
@@ -150,6 +152,13 @@ puts 'Wanna play again? (yes?)'
 play_again = gets.chop.downcase
 # Loop the game
 while play_again == 'yes'
+  puts 'Do you want to play as codebreaker(1) or codemaker(2)? Input 1 or 2'
+  role = gets.chop
+  if role == '1'
+    mastermind.play_as_codebreaker
+  elsif role == '2'
+    mastermind.play_as_codemaker
+  end
   mastermind.play_as_codebreaker
   puts 'Wanna play again? (yes?)'
   play_again = gets.chop.downcase
