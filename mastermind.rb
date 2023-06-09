@@ -10,14 +10,24 @@ class Mastermind
     player = Player.new
     computer = Computer.new
 
-    # Generate code and get a guess
+    # Generate code
     @secret_code = computer.generate_a_code
-    @current_guess = player.make_a_guess
 
-    # Output codes and matches (mostly for debugging for now)
-    puts "computer generated: #{@secret_code}"
-    puts "player guess: #{@current_guess}"
-    check_matches
+    # Loops for 12 tries
+    number_of_tries = 12
+    while number_of_tries.positive?
+      puts "You have #{number_of_tries} more tries:"
+
+      # Making a guess
+      @current_guess = player.make_a_guess
+
+      # Output codes and matches (mostly for debugging for now)
+      puts "computer generated: #{@secret_code}"
+      puts "player guess: #{@current_guess}"
+      check_matches
+      number_of_tries -= 1
+    end
+    puts "You didn't make it! The code was #{@secret_code}"
   end
 
   private
