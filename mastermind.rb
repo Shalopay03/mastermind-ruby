@@ -5,7 +5,9 @@ class Mastermind
   def play
     welcome
     player = Player.new
-    puts player.make_a_guess
+    computer = Computer.new
+    puts "computer generated: #{computer.generate_a_code}"
+    puts "player guess: #{player.make_a_guess}"
   end
 
   private
@@ -35,6 +37,11 @@ end
 
 # This class is about interaction of computer and the game
 class Computer
+  def generate_a_code
+    code = []
+    4.times { code.push(rand(1..6).to_s) }
+    code.join('')
+  end
 end
 
 mastermind = Mastermind.new
