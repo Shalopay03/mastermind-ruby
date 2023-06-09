@@ -100,3 +100,12 @@ end
 
 mastermind = Mastermind.new
 mastermind.play
+
+puts 'Wanna play again? (yes?)'
+play_again = gets.chop.downcase
+# Loop the game
+while play_again == 'yes'
+  mastermind.play
+  puts 'Wanna play again? (yes?)'
+  play_again = gets.chop.downcase
+end
