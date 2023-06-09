@@ -2,10 +2,12 @@
 
 # This class contains all methods regarding playing the game
 class Mastermind
-  def play
+  def initialize
     # Output welcome message and rules
     welcome
+  end
 
+  def play_as_codebreaker
     # Create "players" objects
     player = Player.new
     computer = Computer.new
@@ -19,7 +21,7 @@ class Mastermind
       puts "You have #{number_of_tries} more tries:"
 
       # Making a guess
-      @current_guess = player.make_a_guess
+      @current_guess = player.pick_a_code
 
       # Output codes and matches (mostly for debugging for now)
       puts "computer generated: #{@secret_code}"
@@ -31,6 +33,34 @@ class Mastermind
       number_of_tries -= 1
     end
     puts "You didn't make it! The code was #{@secret_code}"
+  end
+
+  def play_as_codemaker
+    # Create "players" objects
+    player = Player.new
+    computer = Computer.new
+
+    # Generate code
+    @secret_code = player.pick_a_code
+
+    # Loops for 12 tries
+    number_of_tries = 12
+    while number_of_tries.positive?
+      puts "Computer has #{number_of_tries} more tries:"
+
+      # Making a guess
+      @current_guess = computer.guess_a_code
+
+      # Output codes and matches (mostly for debugging for now)
+      puts "computer generated: #{@current_guess}"
+      puts "player code: #{@secret_code}"
+      if check_number_matches == 4
+        puts 'Computer won!!!'
+        return
+      end
+      number_of_tries -= 1
+    end
+    puts "Computer didn't make it!"
   end
 
   private
@@ -75,8 +105,8 @@ end
 
 # This class is about interaction of player and the game
 class Player
-  # Method for inputting code guess from player
-  def make_a_guess
+  # Method for inputting code from player
+  def pick_a_code
     puts 'Enter a four-digit code:'
     code = gets.chop
     # Check for right input
@@ -96,16 +126,31 @@ class Computer
     4.times { code.push(rand(1..6).to_s) }
     code.join('')
   end
+
+  # Method for guessing a code
+  def guess_a_code
+    code = []
+    4.times { code.push(rand(1..6).to_s) }
+    code.join('')
+  end
 end
 
 mastermind = Mastermind.new
-mastermind.play
+
+# Choose role
+puts 'Do you want to play as codebreaker(1) or codemaker(2)? Input 1 or 2'
+role = gets.chop
+if role == '1'
+  mastermind.play_as_codebreaker
+elsif role == '2'
+  mastermind.play_as_codemaker
+end
 
 puts 'Wanna play again? (yes?)'
 play_again = gets.chop.downcase
 # Loop the game
 while play_again == 'yes'
-  mastermind.play
+  mastermind.play_as_codebreaker
   puts 'Wanna play again? (yes?)'
   play_again = gets.chop.downcase
 end
