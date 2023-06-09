@@ -24,7 +24,10 @@ class Mastermind
       # Output codes and matches (mostly for debugging for now)
       puts "computer generated: #{@secret_code}"
       puts "player guess: #{@current_guess}"
-      check_matches
+      if check_number_matches == 4
+        puts 'You won!!! congrats!!'
+        return
+      end
       number_of_tries -= 1
     end
     puts "You didn't make it! The code was #{@secret_code}"
@@ -43,7 +46,7 @@ class Mastermind
   end
 
   # Check and output number of digits matches
-  def check_matches
+  def check_number_matches
     numbers_in_places = 0
     numbers_included = 0
 
@@ -66,6 +69,7 @@ class Mastermind
     # Output of results
     puts "#{numbers_in_places} - in position"
     puts "#{numbers_included} - in code"
+    numbers_in_places
   end
 end
 
